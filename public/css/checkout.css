@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+    /* Deep Luxury Color Canvas */
+    --bg-main: #0a0e17;              /* Deep, imperial midnight navy */
+    --panel-surface: #121824;        /* Rich charcoal-navy compound card surface */
+    --input-bg: #182030;             /* Subtle embedded input depth */
+    
+    /* Elegant Accenting System */
+    --gold-accent: #d4af37;          /* Muted, premium metallic champagne gold */
+    --gold-hover: #f3e5ab;           /* Soft silk gold light flare */
+    --border-subtle: rgba(212, 175, 55, 0.15); /* Delicate golden thread boundaries */
+    
+    /* Polished Typography Tones */
+    --text-light: #f4f6fa;           /* Off-white porcelain script color */
+    --text-muted: #8fa0bc;           /* Soft slate-gray secondary description */
+    --text-alert: #e06c75;           /* Refined, muted burgundy warning */
+    
+    /* Structural Curves & Sophisticated Timing */
+    --luxury-radius: 8px;            /* Subtle, intentional corner radii */
+    --luxury-ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Master Reset & Atmosphere Alignment */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    margin: 0;
+    padding: 80px 24px 160px 24px; /* Generous vertical room for clean breathing space */
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Master Wrapper Matrix */
+main[data-page="checkout"] {
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Elegant Serif Primary Title Display */
+main[data-page="checkout"] h1 {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    margin: 0 0 48px 0;
+    text-align: center;
+}
+
+/* Validation System Error Layout - Refined Alert Module */
+main[data-page="checkout"] > div:has(ul) {
+    background-color: rgba(224, 108, 117, 0.04);
+    border: 1px solid var(--text-alert);
+    border-radius: var(--luxury-radius);
+    padding: 24px;
+    margin-bottom: 40px;
+    max-width: 100%;
+}
+
+main[data-page="checkout"] ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-alert);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Checkout Structural Layout Split */
+#checkoutForm {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px; /* Generous workspace split gap */
+    align-items: start;
+}
+
+/* Container Wrapper Groups */
+#checkoutForm > section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    grid-column: 1;
+}
+
+/* Left Stack Form Sectioning & Right Column Summary Card Layout */
+.formSectionCard,
+#checkoutForm > section > section {
+    background-color: var(--panel-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--luxury-radius);
+    padding: 40px;
+    /* Soft, luxurious depth shadow cast over background geometry */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Explicitly bind the order summary element to the right-hand column on desktop layout */
+#checkoutForm > section > section:last-of-type {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 40px;
+}
+
+/* Elegant Sectional Headings */
+main[data-page="checkout"] h2 {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--gold-accent);
+    margin: 0 0 32px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 14px;
+}
+
+/* Input Fields Grouping Elements */
+#checkoutForm > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+#checkoutForm > div label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+/* Premium Form Inputs */
+#checkoutForm > div input[type="text"],
+#checkoutForm > div input[type="email"],
+#checkoutForm > div input[type="tel"] {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-family: inherit;
+    border-radius: var(--luxury-radius);
+    box-sizing: border-box;
+    transition: all 0.3s var(--luxury-ease);
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+#checkoutForm > div input:hover {
+    background-color: rgba(24, 32, 48, 0.8);
+}
+
+/* Gentle Gold Flare Transition on Focus Context */
+#checkoutForm > div input:focus {
+    background-color: var(--bg-main);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 1px var(--gold-accent), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Payment Selector Option Cards */
+#checkoutForm > section > label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    border-radius: var(--luxury-radius);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+    transition: all 0.25s var(--luxury-ease);
+}
+
+#checkoutForm > section > label:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    background-color: rgba(24, 32, 48, 0.8);
+}
+
+#checkoutForm > section > label:has(input[type="radio"]:checked) {
+    border-color: var(--gold-accent);
+    background-color: rgba(214, 175, 55, 0.03);
+}
+
+#checkoutForm > section > label input[type="radio"] {
+    accent-color: var(--gold-accent);
+    margin: 0;
+    width: 18px;
+    height: 18px;
+}
+
+/* Order Summary Presentation Blocks */
+#checkoutForm > section > section > div {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 6px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+#checkoutForm > section > section > div p {
+    margin: 0;
+}
+
+#checkoutForm > section > section > div p:first-of-type {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-light);
+    grid-column: 1;
+}
+
+#checkoutForm > section > section > div p:nth-of-type(2) {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    grid-column: 1;
+    margin-top: 4px;
+}
+
+#checkoutForm > section > section > div p:last-of-type {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-align: right;
+    grid-row: span 2;
+    grid-column: 2;
+    align-self: center;
+}
+
+/* Pricing Totals List Structuring */
+#checkoutForm > section > section > p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 16px 0 0 0;
+}
+
+#checkoutForm > section > section > p:first-of-type {
+    margin-top: 24px;
+}
+
+/* Master Signature Gold Completion Total Tag */
+#checkoutForm > section > section > strong {
+    display: flex;
+    justify-content: space-between;
+    color: var(--gold-accent);
+    font-size: 1.35rem;
+    font-weight: 600;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 20px;
+    margin-top: 20px;
+    letter-spacing: -0.01em;
+}
+
+/* Exquisite Primary Luxury Placement CTA Button */
+button[type="submit"] {
+    grid-column: 2;
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border-radius: var(--luxury-radius);
+    cursor: pointer;
+    font-family: inherit;
+    box-sizing: border-box;
+    background-color: var(--gold-accent);
+    color: #050505;
+    border: 1px solid var(--gold-accent);
+    margin-top: 28px;
+    transition: all 0.3s var(--luxury-ease);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+}
+
+button[type="submit"]:hover {
+    background-color: transparent;
+    color: var(--gold-hover);
+    border-color: var(--gold-hover);
+    box-shadow: 0 14px 35px rgba(212, 175, 55, 0.05);
+}
+
+button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Balanced Responsive Layout Adapters */
+@media (max-width: 992px) {
+    #checkoutForm {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    #checkoutForm > section > section:last-of-type,
+    button[type="submit"] {
+        grid-column: 1;
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 40px 16px 120px 16px;
+    }
+    
+    main[data-page="checkout"] h1 {
+        font-size: 2rem;
+        margin-bottom: 32px;
+    }
+
+    #checkoutForm > section > section,
+    .formSectionCard {
+        padding: 24px;
+    }
+}

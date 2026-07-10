@@ -1,0 +1,21 @@
+Database Design 
+
+users
+
+products
+
+categories
+
+orders
+
+order_items
+
+cart_items
+
+addresses
+
+payments
+
+reviews
+
+wishlist

@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+    /* Deep Luxury Color Canvas */
+    --bg-main: #0a0e17;              /* Deep, imperial midnight navy */
+    --card-surface: #121824;         /* Rich charcoal-navy compound card surface */
+    --image-housing: #0e131f;        /* Deep well anchor for product artwork */
+    
+    /* Elegant Accenting System */
+    --gold-accent: #d4af37;          /* Muted, premium metallic champagne gold */
+    --gold-hover: #f3e5ab;           /* Soft silk gold light flare */
+    --border-subtle: rgba(212, 175, 55, 0.12); /* Delicate golden thread boundaries */
+    --border-visible: rgba(212, 175, 55, 0.25);
+    
+    /* Polished Typography Tones */
+    --text-light: #f4f6fa;           /* Off-white porcelain text color */
+    --text-muted: #8fa0bc;           /* Soft slate-gray secondary description */
+    
+    /* Structural Curves & Sophisticated Timing */
+    --luxury-radius: 8px;            /* Subtle, intentional corner radii */
+    --luxury-ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Master Reset & Atmosphere Alignment */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0 0 160px 0; /* Clear room for floating navigation dock */
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Fluid, Spaced Display Grid Configuration */
+.productGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 32px; /* Generous breathing room between assets */
+    max-width: 1400px;
+    margin: 48px auto;
+    padding: 0 32px;
+}
+
+/* The High-End Boutique Product Card Container */
+.productCard {
+    background: var(--card-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--luxury-radius);
+    padding: 24px; /* Spacious internal padding */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    /* Rich organic shadow replaces raw lines/glows */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 0.4s var(--luxury-ease), border-color 0.4s ease, box-shadow 0.4s var(--luxury-ease);
+}
+
+/* Elegant Floating Hover State */
+.productCard:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-visible);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+
+/* Premium Housing Frame For Product Artwork */
+.productLink {
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    border-radius: calc(var(--luxury-radius) - 2px);
+    background-color: var(--image-housing);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.productImage img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s var(--luxury-ease);
+}
+
+/* Natural Cinematic Portrait Scale Effect */
+.productCard:hover .productImage img {
+    transform: scale(1.03);
+}
+
+/* Typography Layout System Structural Alignment */
+.productDetails {
+    flex-grow: 1;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Elegant Serif Title Formatting */
+.productName {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-light);
+    margin: 0 0 10px 0;
+    letter-spacing: 0.03em;
+}
+
+.productDescription {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Clean, Sophisticated Pricing Display */
+.productPrice {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text-light);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+}
+
+/* Polished Status Capsules */
+.productStock {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+}
+
+.inStock {
+    color: #34d399; /* Smooth emerald indicator */
+    border-left: 2px solid #34d399;
+    padding-left: 8px;
+}
+
+.outStock {
+    color: var(--text-muted);
+    border-left: 2px solid var(--border-subtle);
+    padding-left: 8px;
+}
+
+/* Execution Layout Anchor Forms */
+.productCard form {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Tactical Command Interface Elements */
+.productCard button {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: var(--luxury-radius);
+    cursor: pointer;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: all 0.3s var(--luxury-ease);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Primary Champagne Gold Action Button (Add to Cart) */
+.productCard form button[type="submit"] {
+    background-color: var(--gold-accent);
+    color: #050505;
+    border: 1px solid var(--gold-accent);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.1);
+}
+
+.productCard form button[type="submit"]:hover {
+    background-color: transparent;
+    color: var(--gold-hover);
+    border-color: var(--gold-hover);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.05);
+}
+
+/* Sophisticated Minimalist Wishlist Toggle Button */
+.wishlistBtn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--border-subtle);
+}
+
+.wishlistBtn:hover {
+    border-color: var(--gold-accent);
+    color: var(--gold-hover);
+}
+
+/* The Active Wishlist Hot-Wire Glow State Alternative */
+.wishlistBtn[data-wishlist-active="true"] {
+    background-color: rgba(212, 175, 55, 0.04);
+    color: var(--gold-accent);
+    border-color: var(--gold-accent);
+}
+
+/* Micro Tactical Click Compression */
+.productCard button:active {
+    transform: scale(0.97);
+}
+
+/* Premium Mobile Screen Optimizations */
+@media (max-width: 640px) {
+    .productGrid {
+        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+        gap: 16px;
+        padding: 0 16px;
+        margin: 24px auto;
+    }
+    
+    .productCard {
+        padding: 16px;
+        border-radius: var(--luxury-radius);
+    }
+    
+    .productDetails {
+        margin-top: 16px;
+    }
+
+    .productName {
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+    }
+    
+    .productDescription {
+        font-size: 0.8rem;
+        line-height: 1.4;
+        margin-bottom: 14px;
+    }
+    
+    .productPrice {
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+    }
+
+    .productStock {
+        margin-bottom: 18px;
+    }
+
+    .productCard button {
+        padding: 11px 14px;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+    }
+}
