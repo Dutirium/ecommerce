@@ -32,6 +32,8 @@ class Order extends Model
         'shipping_state',
         'shipping_postal_code',
         'shipping_country',
+        'discount_amount',
+        'coupon_code',
     ];
 
     public function user(): BelongsTo

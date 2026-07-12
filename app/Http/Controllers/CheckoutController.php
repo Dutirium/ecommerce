@@ -44,20 +44,42 @@ class CheckoutController extends Controller
 
         $cartItems = $cart->items;
 
-        $subtotal = $cartItems->sum(function ($item) {
-            return $item->product->price * $item->quantity;
-        });
+$subtotal = 0;
+$gstAmount = 0;
 
-        $shippingAmount = 0;
+foreach ($cartItems as $item) {
 
-        $totalAmount = $subtotal + $shippingAmount;
+    $lineSubtotal =
+        $item->product->price * $item->quantity;
 
-        return view('checkout', compact(
-            'cartItems',
-            'subtotal',
-            'shippingAmount',
-            'totalAmount'
-        ));
+    $lineGST =
+        $lineSubtotal * ($item->product->gst_rate / 100);
+
+    $subtotal += $lineSubtotal;
+    $gstAmount += $lineGST;
+}
+
+$shippingAmount = 0;
+
+$discountAmount = session(
+    'discount_amount',
+    0
+);
+
+$totalAmount =
+    $subtotal
+    - $discountAmount
+    + $gstAmount
+    + $shippingAmount;
+
+return view('checkout', compact(
+    'cartItems',
+    'subtotal',
+    'discountAmount',
+    'gstAmount',
+    'shippingAmount',
+    'totalAmount'
+));
     }
 
 
@@ -165,41 +187,47 @@ class CheckoutController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $subtotal = 0;
+$subtotal = 0;
+$gstAmount = 0;
 
+foreach ($cart->items as $item) {
 
-        foreach ($cart->items as $item) {
+    $product = $item->product;
 
-            $product = $item->product;
+    if (!$product || !$product->is_active) {
+        return response()->json([
+            'message' => 'One or more products are no longer available.',
+        ], 422);
+    }
 
+    if ($item->quantity > $product->stock) {
+        return response()->json([
+            'message' => "Insufficient stock for {$product->name}.",
+        ], 422);
+    }
 
-            if (!$product || !$product->is_active) {
-                return response()->json([
-                    'message' =>
-                        'One or more products are no longer available.',
-                ], 422);
-            }
+    $lineSubtotal =
+        $product->price * $item->quantity;
 
+    $lineGST =
+        $lineSubtotal * ($product->gst_rate / 100);
 
-            if ($item->quantity > $product->stock) {
-                return response()->json([
-                    'message' =>
-                        "Insufficient stock for {$product->name}.",
-                ], 422);
-            }
+    $subtotal += $lineSubtotal;
+    $gstAmount += $lineGST;
+}
 
+$shippingAmount = 0;
 
-            $subtotal +=
-                $product->price
-                * $item->quantity;
-        }
+$discountAmount = session(
+    'discount_amount',
+    0
+);
 
-
-        $shippingAmount = 0;
-
-        $totalAmount =
-            $subtotal + $shippingAmount;
-
+$totalAmount =
+    $subtotal
+    - $discountAmount
+    + $gstAmount
+    + $shippingAmount;
 
         /*
         |--------------------------------------------------------------------------
@@ -561,7 +589,10 @@ public function verifyRazorpayPayment(Request $request)
 
     $this->sendOrderEmails($order);
 
-
+session()->forget([
+    'coupon_code',
+    'discount_amount',
+]);
     /*
     |--------------------------------------------------------------------------
     | Return Success URL

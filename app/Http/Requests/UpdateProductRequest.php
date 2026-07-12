@@ -22,6 +22,7 @@ public function rules(): array
         'images' => ['nullable','array','max:6',],
         'images.*' => ['image','mimes:jpg,jpeg,png,webp','max:2048',],
         'is_active' => ['nullable', 'boolean'],
+        'gst_rate' => 'required|numeric|min:0|max:100',
     ];
 }
 }

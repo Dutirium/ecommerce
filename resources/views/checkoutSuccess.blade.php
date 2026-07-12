@@ -230,10 +230,32 @@ body {
                 <span>{{ strtoupper($order->payment_method) }}</span>
             </div>
 
-            <div class="metaRow totalHighlight">
-                <span>Total Amount</span>
-                <span>{{ number_format($order->total_amount, 2) }}</span>
-            </div>
+            <div class="metaRow">
+    <span>Subtotal</span>
+    <span>₹{{ number_format($order->subtotal, 2) }}</span>
+</div>
+
+@if($order->discount_amount > 0)
+<div class="metaRow">
+    <span>Discount ({{ $order->coupon_code }})</span>
+    <span>- ₹{{ number_format($order->discount_amount, 2) }}</span>
+</div>
+@endif
+
+<div class="metaRow">
+    <span>GST</span>
+    <span>₹{{ number_format($order->gst_amount, 2) }}</span>
+</div>
+
+<div class="metaRow">
+    <span>Shipping</span>
+    <span>₹{{ number_format($order->shipping_amount, 2) }}</span>
+</div>
+
+<div class="metaRow totalHighlight">
+    <span>Total Amount</span>
+    <span>₹{{ number_format($order->total_amount, 2) }}</span>
+</div>
 
             <h2>Items Ordered</h2>
 
@@ -242,8 +264,16 @@ body {
                 <div class="itemRow">
                     <p class="itemName">{{ $item->product_name }}</p>
                     <p class="itemQty">Quantity: {{ $item->quantity }}</p>
-                    <p class="itemSubtotal">{{ number_format($item->subtotal, 2) }}</p>
-                </div>
+<div>
+    <p class="itemSubtotal">
+        ₹{{ number_format($item->subtotal, 2) }}
+    </p>
+
+    <small style="color:#8fa0bc;">
+        GST:
+        ₹{{ number_format($item->gst_amount, 2) }}
+    </small>
+</div>                </div>
             @endforeach
 
             <!-- Navigation Return Router Link Anchor -->

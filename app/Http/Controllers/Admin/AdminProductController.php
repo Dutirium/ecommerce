@@ -114,6 +114,7 @@ public function update(
         'price' => $validated['price'],
         'stock' => $validated['stock'],
         'is_active' => $request->boolean('is_active'),
+        'gst_rate' => $validated['gst_rate'],
     ]);
 
 

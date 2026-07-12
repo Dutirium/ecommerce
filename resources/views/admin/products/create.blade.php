@@ -99,6 +99,70 @@
             flex-direction: column;
             gap: 8px;
         }
+        /* --- LUXURY DROPDOWN SELECT STYLING --- */
+.admin-product-form select {
+    width: 100%;
+    padding: 14px 44px 14px 18px; /* Extra room on the right for the custom arrow */
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    border-radius: var(--luxury-radius);
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s var(--luxury-ease);
+
+    /* Reset native browser select styling appearance */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Custom elegant champagne-gold arrow via SVG */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 16px;
+}
+
+/* Hover State matching standard text inputs */
+.admin-product-form select:hover {
+    background-color: rgba(24, 32, 48, 0.8);
+}
+
+/* Focus State Tracking Luxury Champagne Border */
+.admin-product-form select:focus {
+    background-color: var(--bg-main);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 1px var(--gold-accent), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the native drop-down options drawer */
+.admin-product-form select option {
+    background-color: var(--panel-surface);
+    color: var(--text-light);
+    padding: 12px;
+}
+
+/* --- VALIDATION TARGET FOR SELECT STATE --- */
+/* If you conditionally append an 'is-invalid' class to the select on error */
+.admin-product-form select.is-invalid {
+    border-color: var(--text-alert) !important;
+    box-shadow: 0 0 0 1px var(--text-alert), inset 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- CONDITIONAL ERROR TYPOGRAPHY --- */
+/* Targeting your custom Blade error class inside the form layout block */
+.admin-product-form .text-danger {
+    color: var(--text-alert);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 4px 0 0 0;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+}
 
         .admin-product-form label {
             font-size: 0.75rem;
@@ -429,7 +493,22 @@
 
         </div>
 
+<div>
+<label for="gst_rate">GST (%)</label>
 
+<select name="gst_rate" id="gst_rate">
+    <option value="0" {{ old('gst_rate') == 0 ? 'selected' : '' }}>0%</option>
+    <option value="5" {{ old('gst_rate') == 5 ? 'selected' : '' }}>5%</option>
+    <option value="12" {{ old('gst_rate') == 12 ? 'selected' : '' }}>12%</option>
+    <option value="18" {{ old('gst_rate', 18) == 18 ? 'selected' : '' }}>18%</option>
+    <option value="28" {{ old('gst_rate') == 28 ? 'selected' : '' }}>28%</option>
+</select>
+
+@error('gst_rate')
+    <p class="text-danger">{{ $message }}</p>
+@enderror
+
+</div>
         {{-- Actions --}}
         <div>
 

@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class OrderService
 {
+    
     public function createOrder(
         User $user,
         array $checkoutData,
@@ -25,7 +26,7 @@ class OrderService
             $paymentMethod,
             $paymentStatus,
             $razorpayOrderId,
-            $razorpayPaymentId
+            $razorpayPaymentId,
         ) {
 
             /*
@@ -94,8 +95,10 @@ class OrderService
             | Validate Products and Calculate Trusted Subtotal
             |--------------------------------------------------------------------------
             */
+            
 
             $subtotal = 0;
+            $gstAmount = 0;
 
             foreach ($cartItems as $cartItem) {
 
@@ -117,11 +120,27 @@ class OrderService
                     ]);
                 }
 
-                $subtotal +=
-                    $product->price
-                    * $cartItem->quantity;
+$itemSubtotal =
+    $product->price * $cartItem->quantity;
+
+$itemGST =
+    $itemSubtotal * ($product->gst_rate / 100);
+
+$subtotal += $itemSubtotal;
+
+$gstAmount += $itemGST;
             }
 
+            //discount 
+
+            $discountAmount = session(
+    'discount_amount',
+    0
+);
+
+$couponCode = session(
+    'coupon_code'
+);
 
             /*
             |--------------------------------------------------------------------------
@@ -129,11 +148,12 @@ class OrderService
             |--------------------------------------------------------------------------
             */
 
-            $shippingAmount = 0;
+$shippingAmount = 0;
 
-            $totalAmount =
-                $subtotal + $shippingAmount;
-
+$totalAmount =
+    $subtotal +
+    $gstAmount +
+    $shippingAmount;
 
             /*
             |--------------------------------------------------------------------------
@@ -163,6 +183,15 @@ class OrderService
 
                     'subtotal' =>
                         $subtotal,
+
+                    'discount_amount' => 
+                    $discountAmount,
+
+                    'coupon_code' => 
+                    $couponCode,
+                    
+                    'gst_amount' => 
+                        $gstAmount,
 
                     'shipping_amount' =>
                         $shippingAmount,
@@ -230,7 +259,9 @@ class OrderService
                     $product->price
                     * $cartItem->quantity;
 
-
+$itemGST =
+    $itemSubtotal *
+    ($product->gst_rate / 100);
                 $order->items()->create([
 
                     'product_id' =>
@@ -248,6 +279,8 @@ class OrderService
 
                     'subtotal' =>
                         $itemSubtotal,
+
+                    'gst_amount' => $itemGST,
                 ]);
 
 
@@ -258,16 +291,40 @@ class OrderService
             }
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | Clear Cart
-            |--------------------------------------------------------------------------
-            */
+/*
+|--------------------------------------------------------------------------
+| Clear Cart
+|--------------------------------------------------------------------------
+*/
 
-            $cart->items()->delete();
+$cart->items()->delete();
 
+/*
+|--------------------------------------------------------------------------
+| Update Coupon Usage
+|--------------------------------------------------------------------------
+*/
 
-            return $order;
+if ($couponCode) {
+
+    \App\Models\DiscountCode::where(
+        'code',
+        $couponCode
+    )->increment('used_count');
+}
+
+/*
+|--------------------------------------------------------------------------
+| Clear Coupon Session
+|--------------------------------------------------------------------------
+*/
+
+session()->forget([
+    'coupon_code',
+    'discount_amount',
+]);
+
+return $order;
 
         }, 3);
     }

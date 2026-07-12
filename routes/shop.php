@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Admin\AdminDiscountCodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WishlistController;
@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CouponController;
 
 Route::get('/list', [ProductController::class, 'index']);
 
@@ -16,6 +17,13 @@ Route::get('/products/{product}', [ProductController::class, 'show'])
 
 
 Route::middleware('auth')->group(function () {
+
+    //discount
+    Route::post(
+    '/coupon/apply',
+        [CouponController::class, 'apply']
+    )->name('coupon.apply');
+
 
     // Wishlist
     Route::get('/wishlist', [WishlistController::class, 'show'])
@@ -125,6 +133,27 @@ Route::middleware('auth')->group(function () {
             '/products/{product}/toggle-status',
             [AdminProductController::class, 'toggleStatus']
         )->name('products.toggleStatus');
+
+        Route::resource(
+            'discountCodes',
+            AdminDiscountCodeController::class
+        );
+
+        Route::delete(
+    '/discount/{discountCode}',
+    [AdminDiscountCodeController::class, 'destroy']
+)->name('discount.destroy');
+
+Route::get(
+    '/discount/{discountCode}/edit',
+    [AdminDiscountCodeController::class, 'edit']
+)->name('discount.edit');
+
+Route::put(
+    '/discount/{discountCode}',
+    [AdminDiscountCodeController::class, 'update']
+)->name('discount.update');
+
     });
    
     Route::get('/orders', [OrderController::class, 'index'])

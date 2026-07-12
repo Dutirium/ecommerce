@@ -185,6 +185,8 @@
                     <th>Unit Price</th>
                     <th>Quantity</th>
                     <th>Subtotal</th>
+                    <th>GST</th>
+                    <th>Total</th>
                 </tr>
 
             </thead>
@@ -213,9 +215,19 @@
                         </td>
 
                         <td>
-                            Rs. {{ number_format($item->subtotal, 2) }}
-                        </td>
+    Rs. {{ number_format($item->subtotal, 2) }}
+</td>
 
+<td>
+    Rs. {{ number_format($item->gst_amount, 2) }}
+</td>
+
+<td>
+    Rs. {{ number_format(
+        $item->subtotal + $item->gst_amount,
+        2
+    ) }}
+</td>
                     </tr>
 
                 @endforeach
@@ -227,48 +239,54 @@
 
         {{-- Order Totals --}}
 
-        <table class="totals">
+<table class="totals">
 
-            <tr>
+    <tr>
+        <td>Subtotal:</td>
+        <td>
+            Rs. {{ number_format($order->subtotal, 2) }}
+        </td>
+    </tr>
 
-                <td>
-                    Subtotal:
-                </td>
+    @if($order->discount_amount > 0)
 
-                <td>
-                    Rs. {{ number_format($order->subtotal, 2) }}
-                </td>
+    <tr>
+        <td>
+            Discount ({{ $order->coupon_code }}):
+        </td>
 
-            </tr>
+        <td>
+            - Rs. {{ number_format($order->discount_amount, 2) }}
+        </td>
+    </tr>
 
+    @endif
 
-            <tr>
+    <tr>
+        <td>GST:</td>
 
-                <td>
-                    Shipping:
-                </td>
+        <td>
+            Rs. {{ number_format($order->gst_amount, 2) }}
+        </td>
+    </tr>
 
-                <td>
-                    Rs. {{ number_format($order->shipping_amount, 2) }}
-                </td>
+    <tr>
+        <td>Shipping:</td>
 
-            </tr>
+        <td>
+            Rs. {{ number_format($order->shipping_amount, 2) }}
+        </td>
+    </tr>
 
+    <tr class="total-row">
+        <td>Total:</td>
 
-            <tr class="total-row">
+        <td>
+            Rs. {{ number_format($order->total_amount, 2) }}
+        </td>
+    </tr>
 
-                <td>
-                    Total:
-                </td>
-
-                <td>
-                    Rs. {{ number_format($order->total_amount, 2) }}
-                </td>
-
-            </tr>
-
-        </table>
-
+</table>
     </div>
 
 
@@ -327,7 +345,7 @@
     <div class="footer">
 
         <p>
-            Thank you for shopping with RJ Store.
+            Thank you for shopping with The Thrift Store.
         </p>
 
         <p>

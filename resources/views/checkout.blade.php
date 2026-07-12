@@ -290,24 +290,72 @@
                     @endforeach
 
 
-                    <p>
-                        Subtotal:
-                        ₹{{ number_format($subtotal, 2) }}
-                    </p>
+<p>
+    Subtotal:
+    <span id="subtotalAmount">
+        ₹{{ number_format($subtotal,2) }}
+    </span>
+</p>
 
-                    <p>
-                        Shipping:
-                        ₹{{ number_format($shippingAmount, 2) }}
-                    </p>
+<p>
+    Discount:
+    <span id="discountAmount">
+        - ₹0.00
+    </span>
+</p>
 
-                    <strong>
-                        Total:
-                        ₹{{ number_format($totalAmount, 2) }}
-                    </strong>
+<p>
+    GST:
+    <span id="gstAmount">
+        ₹{{ number_format($gstAmount,2) }}
+    </span>
+</p>
+
+<p>
+    Shipping:
+    <span id="shippingAmount">
+        ₹{{ number_format($shippingAmount,2) }}
+    </span>
+</p>
+
+<hr>
+
+<strong>
+    Total:
+    <span id="totalAmount">
+        ₹{{ number_format($totalAmount,2) }}
+    </span>
+</strong>
 
                 </section>
 
+<div class="coupon-section">
 
+    <label for="coupon_code">
+        Discount Code
+    </label>
+
+    <input
+        type="text"
+        id="coupon_code"
+        name="coupon_code"
+        placeholder="Enter coupon code"
+        value="{{ old('coupon_code') }}"
+    >
+<div
+    id="couponConfig"
+    data-coupon-url="{{ route('coupon.apply') }}">
+</div>
+    <button
+        type="button"
+        id="applyCoupon"
+    >
+        Apply
+    </button>
+
+    <p id="couponMessage"></p>
+
+</div>
                 <button type="submit"
                 id="checkoutButton">
                     Place Order
@@ -323,17 +371,4 @@
 </body>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="{{ asset('js/checkout.js') }}"></script>
-<script>
-
-    const loadingOverlay = document.querySelector(
-    "#checkoutLoadingOverlay"
-);
-
-const loadingText = document.querySelector(
-    "#checkoutLoadingText"
-);
-
-
-
-</script>
 </html>

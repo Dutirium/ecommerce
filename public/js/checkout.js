@@ -361,3 +361,113 @@ if (checkoutForm && checkoutButton) {
         }
     );
 }
+
+/*
+|--------------------------------------------------------------------------
+| Coupon Code
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Coupon Code
+|--------------------------------------------------------------------------
+*/
+
+const applyButton = document.getElementById("applyCoupon");
+
+if (applyButton) {
+
+    applyButton.addEventListener("click", async () => {
+
+        const couponCode = document
+            .getElementById("coupon_code")
+            .value
+            .trim();
+
+        if (!couponCode) {
+
+            document.getElementById("couponMessage").textContent =
+                "Please enter a coupon code.";
+
+            return;
+        }
+
+        const couponUrl = document
+            .getElementById("couponConfig")
+            .dataset.couponUrl;
+
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .content;
+
+        try {
+
+            const response = await fetch(couponUrl, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+
+                body: JSON.stringify({
+                    coupon_code: couponCode,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+
+                document.getElementById(
+                    "couponMessage"
+                ).textContent = data.message;
+
+                return;
+            }
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent = data.message;
+
+            document.getElementById(
+                "subtotalAmount"
+            ).textContent =
+                "₹" + Number(data.subtotal).toFixed(2);
+
+            document.getElementById(
+                "discountAmount"
+            ).textContent =
+                "- ₹" + Number(data.discount).toFixed(2);
+
+            document.getElementById(
+                "gstAmount"
+            ).textContent =
+                "₹" + Number(data.gst).toFixed(2);
+
+            document.getElementById(
+                "shippingAmount"
+            ).textContent =
+                "₹" + Number(data.shipping).toFixed(2);
+
+            document.getElementById(
+                "totalAmount"
+            ).textContent =
+                "₹" + Number(data.total).toFixed(2);
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "Unable to apply coupon.";
+        }
+
+    });
+
+}

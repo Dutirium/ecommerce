@@ -7,7 +7,7 @@
 </button>
 
 <h1 class="storeName">
-    Rj Store
+    The Thrift Shop
 </h1>
 
 </header>

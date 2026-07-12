@@ -143,6 +143,13 @@ body {
             Add New Product
         </a>
 
+        <a href="{{ route('admin.discountCodes.create') }}">
+        Create New Discount Code
+        </a>
+
+        <a href="{{ route('admin.discountCodes.index') }}">
+            Edit Discount coupons.
+        </a>
     </div>
 
 </div>

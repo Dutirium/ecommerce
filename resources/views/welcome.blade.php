@@ -42,7 +42,7 @@
                 
                 <!-- Expanded Tracking Bold Statement Identity Logo -->
                 <a href="{{ url('/') }}" class="text-3xl font-bold tracking-[0.35em] uppercase text-white luxury-serif transition duration-300 hover:text-[#dfb73c] select-none hover:drop-shadow-[0_0_15px_rgba(223,183,60,0.4)]">
-                    <span>ShopSwift</span>
+                    <span>The Thrift Shop</span>
                 </a>
 
                 <!-- Preservation Node Track Parameters -->

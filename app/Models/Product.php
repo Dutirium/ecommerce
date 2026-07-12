@@ -19,6 +19,7 @@ class Product extends Model
     'stock',
     'image',
     'is_active',
+    'gst_rate',
     ];
 
     public function wishlists()

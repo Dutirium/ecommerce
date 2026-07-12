@@ -54,6 +54,8 @@ class StoreProductRequest extends FormRequest
                 'nullable',
                 'boolean',
             ],
+
+            'gst_rate' => 'required|numeric|min:0|max:100',
         ];
     }
 }
